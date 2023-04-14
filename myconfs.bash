@@ -24,6 +24,9 @@ case $1 in
     # install docker-compose
     sudo apt install docker-compose
 
+    # install vscode
+    sudo snap install --classic code
+
     # copy configuration files to HOME directory
     cp -R conf/home/. $HOME
 
@@ -40,6 +43,13 @@ case $1 in
         echo "update file $HOME/$(basename $FILE)"
         cp $HOME/$(basename $FILE) $FILE
     done
+    # update vscode configuration files
+    VSCODE_ARGV=".vscode/argv.json"
+    echo "update file $HOME/$VSCODE_ARGV"
+    cp $HOME/$VSCODE_ARGV conf/$VSCODE_ARGV
+    VSCODE_EXT=".vscode/extensions/extensions.json"
+    echo "update file $HOME/$VSCODE_EXT"
+    cp $HOME/$VSCODE_EXT conf/$VSCODE_EXT
 ;;
 
 *)

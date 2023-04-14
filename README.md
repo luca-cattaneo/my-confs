@@ -4,6 +4,10 @@ List of my favourites configuration file.
 
 # Deploy
 
+The script has been written for Ubuntu OS version 22 or greater
+
+it needs apt and snap to work
+
 `sudo ./myconfs.bash deploy`
 
 install softwares : 
@@ -13,6 +17,7 @@ install softwares :
     - zsh-autosuggestions
     - docker.io
     - docker-compose
+    - vscode (with snap)
 
 then deploy recorded configuration files
 

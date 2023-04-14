@@ -3,3 +3,7 @@
 [alias]
 	cam = !git add -A && git commit -m
 	pushfl = push --force-with-lease
+[help]
+	autocorrect = 1
+[core]
+	editor = code --wait
