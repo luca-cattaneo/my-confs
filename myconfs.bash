@@ -8,10 +8,17 @@ fi
 
 case $1 in
 "deploy")
+    # install git
+    apt install git
+
     # install zsh and oh-my-zosh and plugins
     apt install -y zsh
     sh -c "$(wget -O- https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
     git clone https://github.com/zsh-users/zsh-autosuggestions ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-autosuggestions
+
+    # install docker and docker-compose
+    apt install docker.io
+    apt install docker-compose
 
     # copy configuration files to HOME directory
     cp -R conf/home/. $HOME
