@@ -1,17 +1,25 @@
+if [[ ${SSH_TTY} ]] ; then
+	# yellow
+	USER_HOST_COLOR=214
+else
+	# green
+	USER_HOST_COLOR=078
+fi
+
 # username
 username() {
-   echo "%B%{$fg[green]%}%n%f%b"
+   echo "%B%{$FG[${USER_HOST_COLOR}]%}%n%f%b"
 }
 
 # hostname 10 char max
 host(){
-   echo "%B%{$fg[green]%}%10>>%1m%<<%f%b"
+   echo "%B%{$FG[${USER_HOST_COLOR}]%}%10>>%1m%<<%f%b"
 }
 
 # current directory
 # if more than 3 depth display first directory,...,2depth
 directory() {
-   echo "%{$fg[red]%}%(5~|%-1~/…/%2~|%3~%f)"
+   echo "%{$FG[196]%}%(5~|%-1~/…/%2~|%3~%f)"
 }
 
 # returns red ✘ if there are errors, nothing otherwise
@@ -25,9 +33,12 @@ prompt_char() {
 }
 
 # git theming
+# blue or green prefix
 ZSH_THEME_GIT_PROMPT_PREFIX=" ${FG[075]}(${FG[078]}"
 ZSH_THEME_GIT_PROMPT_CLEAN=""
+# yellow dirty
 ZSH_THEME_GIT_PROMPT_DIRTY="${FG[214]}*%{$reset_color%}"
+# blue suffix
 ZSH_THEME_GIT_PROMPT_SUFFIX="${FG[075]})%{$reset_color%}"
 
 # putting it all together
