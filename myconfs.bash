@@ -38,6 +38,9 @@ deploy() {
     echo "deploy settings files to $HOME"
     cp -R conf/home/. $HOME
 
+    # apply the new configuration
+    source $HOME/.zshrc
+
     # schedule the update
     echo "Create crontab job for updating conf files"
     CRON_CMD="$PWD/myconfs.bash update"
