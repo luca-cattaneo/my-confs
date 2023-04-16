@@ -2,6 +2,7 @@
 	email = luca.cattaneo.mail@gmail.com
 [alias]
 	cam = !git add -A && git commit -m
+	cm = commit -m
 	pushfl = push --force-with-lease
 [help]
 	autocorrect = 1
