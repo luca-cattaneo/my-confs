@@ -17,8 +17,7 @@ install_softwares()
     # install zsh
     gsudo apt install -y zsh
     # install oh-my-zsh
-    sh -c "$(wget https://github.com/robbyrussell/oh-my-zsh/raw/master/tools/install.sh | sed 's:env zsh -l::g' | sed 's:chsh -s .*$::g')"
-    rm install.sh
+    sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" "" --unattended
     # install zsh-autosuggestions
     git clone https://github.com/zsh-users/zsh-autosuggestions ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-autosuggestions
 
@@ -38,14 +37,14 @@ deploy() {
     echo "deploy settings files to $HOME"
     cp -R conf/home/. $HOME
 
-    # apply the new configuration
-    source $HOME/.zshrc
-
     # schedule the update
     echo "Create crontab job for updating conf files"
     CRON_CMD="$PWD/myconfs.bash update"
     CRON_JOB="0 0 * * * $CRON_CMD"
     ( crontab -l | grep -v -F "$CRON_CMD" ; echo "$CRON_JOB" ) | crontab -
+
+    echo '
+...restart your teminal for the changes to take place'
 }
 
 update() {
