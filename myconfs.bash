@@ -6,8 +6,11 @@ then
     exit 1
 fi
 
-case $1 in
-"deploy")
+# Settings file location
+CONF_HOME="conf/home"
+
+install_softwares()
+{
     # install git
     sudo apt install git
 
@@ -26,8 +29,13 @@ case $1 in
 
     # install vscode
     sudo snap install --classic code
+}
 
-    # copy configuration files to HOME directory
+deploy() { 
+    install_softwares
+
+    # copy configuration files from CONF to HOME directory
+    echo "deploy settings files to $HOME"
     cp -R conf/home/. $HOME
 
     # schedule the update
@@ -35,21 +43,23 @@ case $1 in
     CRON_CMD="$PWD/myconfs.bash update"
     CRON_JOB="0 0 * * * $CRON_CMD"
     ( crontab -l | grep -v -F "$CRON_CMD" ; echo "$CRON_JOB" ) | crontab -
+}
+
+update() {
+    # update HOME configuration files to CONF
+    for FILE in $(cd conf/home && find . -type f); do
+        echo "update file $FILE"
+        cp $HOME/$FILE $CONF_HOME/$FILE
+    done
+}
+
+case $1 in
+"deploy")
+    deploy
 ;;
 
 "update")
-    # update home configuration files
-    for FILE in $(find conf/home -type f); do
-        echo "update file $HOME/$(basename $FILE)"
-        cp $HOME/$(basename $FILE) $FILE
-    done
-    # update vscode configuration files
-    VSCODE_ARGV=".vscode/argv.json"
-    echo "update file $HOME/$VSCODE_ARGV"
-    cp $HOME/$VSCODE_ARGV conf/$VSCODE_ARGV
-    VSCODE_EXT=".vscode/extensions/extensions.json"
-    echo "update file $HOME/$VSCODE_EXT"
-    cp $HOME/$VSCODE_EXT conf/$VSCODE_EXT
+    update
 ;;
 
 *)
